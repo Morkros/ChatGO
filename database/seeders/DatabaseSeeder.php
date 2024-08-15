@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Contact;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +14,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        //crea usuarios
+        $users = User::factory()->count(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        foreach ($users as $user) {
+            // Crea contactos para cada usuario
+            $contactUsers = $users->filter(fn($u) => $u->id !== $user->id)->random(3);
+
+            foreach ($contactUsers as $contactUser) {
+                Contact::create([
+                    'user_id' => $user->id,
+                    'id_contact' => $contactUser->id,
+                ]);
+            }
+        }
+        
+
+        /* \App\Models\User::factory()->create([
+             'username' => 'Test User',
+             'email' => 'test@example.com',
+         ]); */
     }
 }

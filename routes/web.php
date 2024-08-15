@@ -23,4 +23,8 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+Route::view('contacts', 'livewire.contact-index')
+    ->middleware(['auth'])
+    ->name('contacts');
+
 require __DIR__.'/auth.php';
