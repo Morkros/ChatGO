@@ -16,13 +16,12 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('transmitter_id');
-            $table->string('receiver_group_id');
+            $table->string('receiver_id');
             $table->string('body');
+            $table->foreignId('translated_message_id')->nullable()->constrained('translations');
             $table->timestamps();
         });
-        
     }
-
     /**
      * Reverse the migrations.
      *

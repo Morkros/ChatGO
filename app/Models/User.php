@@ -45,18 +45,8 @@ class User extends Authenticatable
     //     'email_verified_at' => 'datetime',
     // ];
 
-    public function groups()
+    public function contacts()
     {
-        return $this->belongsToMany(Group::class, 'users_groups');
-    }
-
-    public function messagesTransmitted()
-    {
-        return $this->hasMany(Message::class, 'transmitter_id');
-    }
-
-    public function receivedMessages()
-    {
-        return $this->belongsToMany(Message::class, 'message_receiver', 'user_id', 'message_id');
+        return $this->hasMany(Contact::class, 'user_id');
     }
 }
