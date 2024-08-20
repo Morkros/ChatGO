@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ContactsIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +24,6 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::view('contacts', 'livewire.contact-index')
-    ->middleware(['auth'])
-    ->name('contacts');
+Route::get('contacts',ContactsIndex::class) ->middleware(['auth'])->name('contacts');
 
 require __DIR__.'/auth.php';
