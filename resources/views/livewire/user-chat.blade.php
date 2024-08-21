@@ -2,7 +2,7 @@
     @if($selectedContactId)
             @foreach($messages as $message)
                 <li>
-                    {{$message}}
+                    {{$message->body}}
                 </li>
             @endforeach
     @else

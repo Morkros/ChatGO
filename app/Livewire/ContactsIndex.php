@@ -2,10 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Models\Contact;
 
 class ContactsIndex extends Component
 {
@@ -13,6 +13,10 @@ class ContactsIndex extends Component
     public $contacts;
     public function mount(){
         $this->user_id = Auth::id();
+        $this->loadContacts();
+    }
+
+    public function loadContacts(){
         $this->contacts = DB::select(
             'SELECT users.*, contacts.* 
             FROM users 
@@ -21,13 +25,16 @@ class ContactsIndex extends Component
             ['user_id' => $this->user_id]
         );
     }
-
-    public function delete(){
-        
-    }
-
+    
     public function render()
     {
         return view('livewire.contacts-index');
+    }
+
+    public function delete($id) {
+        // dd($id);
+        Contact::find($id)->delete();
+        $this->loadContacts();
+        //session()->flash('message', 'Contact deleted successfully.');
     }
 }

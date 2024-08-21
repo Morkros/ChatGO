@@ -24,6 +24,8 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::get('contacts',ContactsIndex::class) ->middleware(['auth'])->name('contacts');
+Route::get('contacts',ContactsIndex::class)
+->middleware(['auth'])
+->name('contacts');
 
 require __DIR__.'/auth.php';

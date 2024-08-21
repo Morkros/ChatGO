@@ -14,7 +14,7 @@ class ListContact extends Component
     
     public function Evento($contact_id)
     {
-        $this->dispatch('Evento',$contact_id);
+        $this->dispatch('SelectContact',$contact_id);
     }
 
     public function mount()
