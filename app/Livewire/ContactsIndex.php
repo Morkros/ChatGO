@@ -6,17 +6,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use App\Models\Contact;
+use App\Models\User;
 
 class ContactsIndex extends Component
 {
     public $user_id;
+    public $email;
     public $contacts;
-    public function mount(){
+    public function mount()
+    {
         $this->user_id = Auth::id();
         $this->loadContacts();
     }
 
-    public function loadContacts(){
+    public function loadContacts()
+    {
         $this->contacts = DB::select(
             'SELECT users.*, contacts.* 
             FROM users 
@@ -25,16 +29,30 @@ class ContactsIndex extends Component
             ['user_id' => $this->user_id]
         );
     }
-    
+
+    public function addContact()
+    {
+        $contactId = user::where('email', $this->email)->first();
+            dd($contactId);
+        if ($contactId == null) {
+            $this->dispatch('contact-not-found'); 
+        } else {
+            $newContact = contact::create([
+                'user_id' => $this->user_id,
+                'id_contact' => $contactId->id,
+            ]);
+            $this->dispatch('contact-added');
+        }
+    }
+
     public function render()
     {
         return view('livewire.contacts-index');
     }
 
-    public function delete($id) {
-        // dd($id);
+    public function delete($id)
+    {
         Contact::find($id)->delete();
         $this->loadContacts();
-        //session()->flash('message', 'Contact deleted successfully.');
     }
 }

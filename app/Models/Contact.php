@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    // Suponiendo que cada contacto pertenece a un usuario
+    protected $fillable = [
+        'user_id',
+        'id_contact',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
