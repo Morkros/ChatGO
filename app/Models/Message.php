@@ -13,15 +13,12 @@ class Message extends Model
         'transmitter_id',
         'receiver_id',
         'body',
+        'translated_message_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-    public function receivers()
-    {
-        return $this->belongsToMany(User::class, 'message_receiver', 'message_id', 'user_id');
     }
 
 }
