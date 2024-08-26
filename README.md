@@ -4,7 +4,7 @@ Laravel 10.0.0
 Breeze 1.29.1
 Livewire 3.5.4
 Spatie 6.9.0
-
+DeepL Api 
 # INSTALACION
 1. Clonar repositorio ()
 
