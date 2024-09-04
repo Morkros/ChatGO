@@ -13,6 +13,7 @@ class ContactsIndex extends Component
     public $user_id;
     public $email;
     public $contacts;
+    
     public function mount()
     {
         $this->user_id = Auth::id();
@@ -33,15 +34,17 @@ class ContactsIndex extends Component
     public function addContact()
     {
         $contactId = user::where('email', $this->email)->first();
-            dd($contactId);
+            
         if ($contactId == null) {
-            $this->dispatch('contact-not-found'); 
+            $this->dispatch('contact-not-found');
         } else {
             $newContact = contact::create([
                 'user_id' => $this->user_id,
                 'id_contact' => $contactId->id,
             ]);
-            $this->dispatch('contact-added');
+            // $this->dispatch('contact-added');
+            $this->loadContacts();
+            
         }
     }
 

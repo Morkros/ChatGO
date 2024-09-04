@@ -12,4 +12,11 @@ class Translation extends Model
     protected $fillable = [
         'message_translated',
     ];
+
+    // Definir la relación con el modelo Message (si es necesario)
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'id_translations');
+    }
+
 }

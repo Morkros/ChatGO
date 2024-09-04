@@ -21,4 +21,8 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function translation()
+    {
+        return $this->belongsTo(Translation::class, 'id_translations');
+    }
 }

@@ -19,8 +19,9 @@ class TranslationController extends Controller
     public static function translate($mensaje, $emisor, $receptor)
     {
         self::init();
-
+        $emisor = substr($emisor, 0, 2); // Tomar dos primeras letras para Source Language
         try {
+            //dd($mensaje, $emisor, $receptor);
             $result = self::$translator->translateText($mensaje, $emisor, $receptor);
             return $result->text;
         } catch (\Exception $e) {

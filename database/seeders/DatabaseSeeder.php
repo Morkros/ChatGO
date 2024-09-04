@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
              'username' => 'Administrador',
              'email' => 'admin@admin.com',
              'password' => Hash::make('admin'),
-             'language' => fake()->randomElement(['ES', 'EN', 'DE']),
+             'language' => fake()->randomElement(['ES', 'EN_US', 'DE']),
          ]);
     }
 }

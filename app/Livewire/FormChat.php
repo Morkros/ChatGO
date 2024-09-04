@@ -13,7 +13,7 @@ class FormChat extends Component
 {
     public $mensaje;
     public $SelectedContactId;
-
+    // Escucha de eventos
     protected $listeners = ['SelectContact' => 'selectContact'];
 
     public function selectContact($contactId)
@@ -38,9 +38,9 @@ class FormChat extends Component
             'transmitter_id' => $emisor->id,
             'receiver_id' => $receptor->id,
             'body' => $this->mensaje,
-            'translated_message_id' => $translationSave->id,
+            'translated_message_id' => $translationSave->id ?? null,
         ]);
-        
+
         $this->mensaje = "";
         $this->dispatch('Refresh', $this->SelectedContactId);
     }
