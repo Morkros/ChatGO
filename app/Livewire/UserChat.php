@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class UserChat extends Component
@@ -12,12 +13,14 @@ class UserChat extends Component
     public $messages = [];
     protected $listeners = ['SelectContact' => 'loadChat', 'Refresh' => 'loadChat'];
     public $user;
+    public $receptor;
     public function loadChat($contactId)
     {
         $this->selectedContactId = $contactId;
         $this->user = Auth::user();
+        $this->receptor = User::find($contactId);
         $emisor = $this->user->id;
-        $this->messages = Message::select('messages.*', 'translations.*') 
+        $this->messages = Message::select('messages.*', 'translations.message_translated') 
             ->leftJoin('translations', 'messages.translated_message_id', '=', 'translations.id')
             ->where(function ($query) use ($emisor, $contactId) {
                 $query->where('messages.transmitter_id', $emisor)

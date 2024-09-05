@@ -2,25 +2,27 @@
     @if ($selectedContactId)
         <ul class="space-y-2">
             @foreach ($messages as $message)
-            @php
+                @php
                     $isUserMessage = $message->transmitter_id == $user->id;
-                    $messageClass = $isUserMessage ? 'bg-emerald-500 dark:text-black' : 'bg-orange-300 dark:text-black';
+                    $messageClass = $isUserMessage ? 'bg-emerald-500 text-black' : 'bg-orange-300 text-black';
                     // $messageBody = $isUserMessage ? $message->body : $message->message_translated;
-                    @endphp
+                @endphp
                 <li class="flex {{ $isUserMessage ? 'justify-end' : 'justify-start' }}">
                     <div class="{{ $messageClass }} rounded-lg px-4 py-2 max-w-xs">
-                        {{-- @dd($message,$message->created_at) --}}
+                        {{-- @dd($message,$receptor)  --}}
                         @if ($isUserMessage)
-                        {{ $message->body }}
+                            {{ $message->body }}
                         @else
-                        {{ $message->message_translated }}
+                            <div class="text-xs text-left text-grey-500">{{ $receptor->username }}</div>
+                            {{ $message->message_translated }}
                         @endif
-                        <div class="text-xs text-right text-white-500 mt-1">{{ $message->created_at->format('H:i') }}</div>
+                        <div class="text-xs text-right text-white-500 mt-1">{{ $message->created_at->format('H:i') }}
+                        </div>
                     </div>
                 </li>
             @endforeach
         </ul>
     @else
-        <p class="dark:text-white">Seleccionar Chat.</p>
+        <p class="text-white">Seleccionar Chat.</p>
     @endif
 </div>

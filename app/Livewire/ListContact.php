@@ -11,9 +11,11 @@ class ListContact extends Component
 {
     public $id;
     public $contacts = [];
+    public $selectedContactId;
     
     public function Evento($contact_id)
     {
+        $this->selectedContactId = $contact_id;
         $this->dispatch('SelectContact',$contact_id);
     }
 

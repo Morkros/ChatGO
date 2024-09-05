@@ -15,6 +15,11 @@ class FormChat extends Component
     public $SelectedContactId;
     // Escucha de eventos
     protected $listeners = ['SelectContact' => 'selectContact'];
+    
+    protected $rules = [
+        'message' => 'required|min:1|max:250',
+        'email' => 'required|email',
+    ];
 
     public function selectContact($contactId)
     {
@@ -23,6 +28,7 @@ class FormChat extends Component
 
     public function store()
     {
+
         $emisor = User::find(Auth::id());
         $receptor = User::find($this->SelectedContactId);
         if ($emisor->language != $receptor->language) {
