@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\MessageSend;
 use App\Http\Controllers\TranslationController;
 use App\Models\Message;
 use App\Models\Translation;
@@ -40,15 +41,17 @@ class FormChat extends Component
             $translationSave = null;
         }
 
-        Message::create([
+        $message = Message::create([
             'transmitter_id' => $emisor->id,
             'receiver_id' => $receptor->id,
             'body' => $this->mensaje,
             'translated_message_id' => $translationSave->id ?? null,
         ]);
 
-        $this->mensaje = "";
+        event(new MessageSend($message));
+
         $this->dispatch('Refresh', $this->SelectedContactId);
+        $this->mensaje = "";
     }
 
     public function render()

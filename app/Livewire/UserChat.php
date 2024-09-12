@@ -6,14 +6,46 @@ use Livewire\Component;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserChat extends Component
 {
     public $selectedContactId;
-    public $messages = [];
-    protected $listeners = ['SelectContact' => 'loadChat', 'Refresh' => 'loadChat'];
+    public $messages;
+    protected $listeners = ['SelectContact' => 'loadChat', 'Refresh', 'MessageSend' => 'onMessageReceived'];
     public $user;
     public $receptor;
+
+    public function Refresh(){
+        $this->loadChat($this->selectedContactId);
+    }
+
+    public function onMessageReceived($mensaje)
+    {
+        // Decodificar el mensaje JSON a un array asociativo
+        $data = json_decode($mensaje, true);
+    
+        // Verificar si json_decode devolvió un array
+        if (is_array($data)) {
+            try {
+                // Crear una nueva instancia de Message
+                $mensaje = new Message($data);
+    
+                // Asegurarse de que $this->messages es una colección o array
+                if (is_array($this->messages) || $this->messages instanceof \Illuminate\Support\Collection) {
+                    $this->messages[] = $mensaje; // Agregar el mensaje a la colección
+                } else {
+                    throw new \Exception('La propiedad $messages no es una colección o array.');
+                }
+            } catch (\Exception $e) {
+                // Manejar errores si el modelo no puede ser creado o el mensaje es inválido
+                Log::error('Error al procesar el mensaje.', ['exception' => $e->getMessage(), 'data' => $data]);
+            }
+        } else {
+            Log::error('Error al decodificar JSON:', ['json' => $mensaje]);
+        }
+    }
+
     public function loadChat($contactId)
     {
         $this->selectedContactId = $contactId;

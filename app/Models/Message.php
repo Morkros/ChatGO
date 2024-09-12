@@ -14,6 +14,7 @@ class Message extends Model
         'receiver_id',
         'body',
         'translated_message_id',
+        'created_at'
     ];
 
     public function user()

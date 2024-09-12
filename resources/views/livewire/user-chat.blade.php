@@ -1,4 +1,4 @@
-<div class="flex-1 p-4 overflow-y-auto dark:text-white">
+<div class="flex-1 p-4 overflow-y-auto dark:text-white" id="messages-container">
     @if ($selectedContactId)
         <ul class="space-y-2">
             @foreach ($messages as $message)
@@ -26,3 +26,13 @@
         <p class="text-white">Seleccionar Chat.</p>
     @endif
 </div>
+@push('scripts')
+    <script>
+        const messagesContainer = document.getElementById('messages-container');
+        function scrollToBottom() {
+            console.log(messagesContainer.scrollHeight);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        Livewire.on('loadChat', scrollToBottom());
+    </script>
+@endpush

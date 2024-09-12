@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-        <style>
+        <style rel="preload">
             html, body {
                 height: 100%;
                 margin: 0;
