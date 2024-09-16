@@ -11,6 +11,7 @@ new class extends Component
 {
     public string $name = '';
     public string $email = '';
+    public string $language = '';
 
     /**
      * Mount the component.
@@ -20,6 +21,7 @@ new class extends Component
         // dd(Auth::user());
         $this->name = Auth::user()->username;
         $this->email = Auth::user()->email;
+        $this->language = Auth::user()->language;
     }
 
     /**
@@ -32,6 +34,7 @@ new class extends Component
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'language' => ['required, string'],
         ]);
 
         $user->fill($validated);
@@ -71,7 +74,7 @@ new class extends Component
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __("Update your account's profile information.") }}
         </p>
     </header>
 
@@ -80,6 +83,47 @@ new class extends Component
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        </div>
+
+        <div>
+            <x-input-label for="language" :value="__('Language')" />
+            <select wire:model="language" id="language" name="language" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                <option value="" disabled selected>{{ __('Select a language') }}</option>
+                <option value="EN-GB">{{ __('English - British (EN-GB)') }}</option>
+                <option value="EN-US">{{ __('English - American (EN-US)') }}</option>
+                <option value="ES">{{ __('Español (ES)') }}</option>
+                <option value="AR">{{ __('عربي (AR)') }}</option>
+                <option value="BG">{{ __('български (BG)') }}</option>
+                <option value="CS">{{ __('čeština (CS)') }}</option>
+                <option value="DA">{{ __('dansk (DA)') }}</option>
+                <option value="DE">{{ __('Deutsch (DE)') }}</option>
+                <option value="FR">{{ __('Français (FR)') }}</option>
+                <option value="EL">{{ __('ελληνικά (EL)') }}</option>
+                <option value="ET">{{ __('eesti keel (ET)') }}</option>
+                <option value="FI">{{ __('suomalainen (FI)') }}</option>
+                <option value="HU">{{ __('magyar (HU)') }}</option>
+                <option value="ID">{{ __('Indonesia (ID)') }}</option>
+                <option value="IT">{{ __('Italiano (IT)') }}</option>
+                <option value="JA">{{ __('日本語 (JA)') }}</option>
+                <option value="KO">{{ __('한국인 (KO)') }}</option>
+                <option value="LT">{{ __('lietuvių (LT)') }}</option>
+                <option value="LV">{{ __('latviski (LV)') }}</option>
+                <option value="NB">{{ __('norsk bokmål (NB)') }}</option>
+                <option value="NL">{{ __('Nederlands (NL)') }}</option>
+                <option value="PL">{{ __('Polski (PL)') }}</option>
+                <option value="PT-BR">{{ __('Português - Brasileiro (PT-BR)') }}</option>
+                <option value="PT-PT">{{ __('Português (PT-PT)') }}</option>
+                <option value="RO">{{ __('română (RO)') }}</option>
+                <option value="RU">{{ __('Русский (RU)') }}</option>
+                <option value="SK">{{ __('slovenský (SK)') }}</option>
+                <option value="SL">{{ __('slovenski (SL)') }}</option>
+                <option value="SV">{{ __('svenska (SV)') }}</option>
+                <option value="TR">{{ __('Türkçe (TR)') }}</option>
+                <option value="UK">{{ __('українська (UK)') }}</option>
+                <option value="ZH-HANS">{{ __('中文 - 简体 (ZH-HANS)') }}</option>
+                <option value="ZH-HANT">{{ __('中文 - 繁体 (ZH-HANT)') }}</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('language')" />
         </div>
 
         <div>

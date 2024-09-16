@@ -21,9 +21,9 @@
             <x-modal name="addContactModal" :show="false" maxWidth="lg">
                 <div class="p-6">
                     <input wire:model="email" type="text">
-                    <button wire:click="addContact">Create</button>
+                    <button wire:click="addContact" class="bg-indigo-500 text-white font-semibold py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Create</button>
                     <button @click="$dispatch('close-modal', 'addContactModal')"
-                        class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                        class="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                         Close
                     </button>
                 </div>
