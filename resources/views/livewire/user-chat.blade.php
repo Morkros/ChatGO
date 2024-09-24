@@ -29,10 +29,12 @@
 @push('scripts')
     <script>
         const messagesContainer = document.getElementById('messages-container');
+        
         function scrollToBottom() {
-            console.log(messagesContainer.scrollHeight);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
-        Livewire.on('loadChat', scrollToBottom());
+        console.log("asd")
+        Livewire.on('SelectContact', scrollToBottom); // Pass function reference without parentheses
     </script>
 @endpush
+

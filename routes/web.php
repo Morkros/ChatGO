@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\ContactsIndex;
+use App\Livewire\ContactsModal;
 use App\Livewire\Modal;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,6 @@ Route::get('contacts',ContactsIndex::class)
 Route::get('enviar',function () {
     Mail::to('thiagomeseg@gmail.com')->send(new EnviarCorreo('Markito'));
 });
-
 
 Route::view('modal', 'livewire.modal');
     

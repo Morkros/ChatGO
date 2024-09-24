@@ -13,7 +13,7 @@ class ContactsIndex extends Component
     public $user_id;
     public $email;
     public $contacts;
-    
+
     public function mount()
     {
         $this->user_id = Auth::id();
@@ -44,18 +44,31 @@ class ContactsIndex extends Component
             ]);
             // $this->dispatch('contact-added');
             $this->loadContacts();
-            
+            $this->closeModal("ModalAdd");
         }
     }
-
-    public function render()
-    {
-        return view('livewire.contacts-index');
-    }
-
+    
     public function delete($id)
     {
         Contact::find($id)->delete();
         $this->loadContacts();
+    }
+    public function render()
+    {
+        return view('livewire.contacts-index');
+    }
+    
+    //Modal
+    public $ModalAdd = false;
+    public $ModalUpdate = false;
+
+    public function openModal($nombre)
+    {
+        $this->$nombre = true;
+    }
+
+    public function closeModal($nombre)
+    {
+        $this->$nombre = false;
     }
 }

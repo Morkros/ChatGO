@@ -40,10 +40,7 @@ return [
                 'scheme' => env('PUSHER_SCHEME', 'https'), // 'https' para cifrado
                 'encrypted' => true,
                 'useTLS' => true,
-            ],
-            'client_options' => [
-                // Opciones del cliente Guzzle si es necesario
-            ],
+            ]
         ],
 
 

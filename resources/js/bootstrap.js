@@ -20,9 +20,7 @@ window.Echo = new Echo({
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
     forceTLS: true
 });
-
-// Enable pusher logging - don't include this in production
-//Pusher.logToConsole = true;
+Pusher.logToConsole = true;
 
 // window.Echo.channel('chatgo')
 //     .listen('MessageSend', (data) => {
@@ -33,6 +31,7 @@ window.Echo.channel('chatgo')
     console.log('Message received:', event.message);
     if (window.Livewire) {
         const messageJson = JSON.stringify(event.message);
+        alert(JSON.stringify(messageJson));
         window.Livewire.dispatch('MessageSend', { mensaje: messageJson });
     } else {
         console.error('Livewire is not available');
@@ -40,6 +39,7 @@ window.Echo.channel('chatgo')
 
     .listen('.Refresh', () => {
         if (window.Livewire) {
+        console.log('Refresh');
             window.Livewire.dispatch('Refresh');
         } else {
             console.error('Livewire is not available');

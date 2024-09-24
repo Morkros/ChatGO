@@ -15,7 +15,7 @@
             <div class="flex-1 flex flex-col overflow-hidden">
                 @livewire('UserChat')
                 {{-- Barra para enviar mensajes --}}
-                @livewire('FormChat')   
+                @livewire('FormChat') 
             </div>
         </div>
     </div>
