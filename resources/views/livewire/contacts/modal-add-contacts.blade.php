@@ -20,7 +20,12 @@
                             </button>
                         </div>
                         <div class="mt-2">
-                            <input wire:model="email" type="text" class="block w-full bg-gray-700 text-white border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ingresar email">
+                            <label for="name" class="block text-sm font-medium text-gray-300">Nombre</label>
+                            <input id="name" wire:model="name" type="text" class="block w-full bg-gray-700 text-white border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ingresar un nombre">
+
+                            <label for="email" class="block text-sm font-medium text-gray-300 mt-4">Email</label>
+                            <input id="email" wire:model="email" type="text" class="block w-full bg-gray-700 text-white border-gray-600 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ingresar email">
+
                             <button wire:click="addContact" class="mt-3 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                                 Añadir
                             </button>
@@ -32,3 +37,4 @@
     </div>    
     @endif
 </div>
+

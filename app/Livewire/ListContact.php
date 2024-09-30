@@ -22,17 +22,7 @@ class ListContact extends Component
     public function mount()
     {
         $this->id = Auth::id(); 
-        $Listcontacts = Contact::where('user_id', $this->id)->get(); // Cambiar Consulta
-        foreach ($Listcontacts as $contact) {
-            $user = User::find($contact->id_contact);
-            
-            $this->contacts[] = (object) [
-                'id' => $user->id,
-                'name' => $user->username,
-                'email' => $user->email,
-            ];
-        }
-        //dd($this->contacts);
+        $this->contacts = Contact::where('user_id', $this->id)->with('user')->get(); // Cambiar Consulta
     }
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Contact;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -34,7 +35,7 @@ new class extends Component
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'language' => ['required, string'],
+            'language' => ['required' , 'string'],
         ]);
 
         $user->fill($validated);

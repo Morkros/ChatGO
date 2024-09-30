@@ -7,65 +7,99 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class UserChat extends Component
 {
     public $selectedContactId;
     public $messages;
-    protected $listeners = ['SelectContact' => 'loadChat', 'Refresh', 'MessageSend' => 'onMessageReceived'];
+    protected $listeners = ['SelectContact' => 'changeContact', 'Refresh', 'MessageSend' => 'onMessageReceived','loadMoreMessages'];
     public $user;
     public $receptor;
-
-    public function Refresh(){
-        $this->loadChat($this->selectedContactId);
-    }
-
-    public function onMessageReceived($mensaje)
-    {
-        // Decodificar el mensaje JSON a un array asociativo
-        $data = json_decode($mensaje, true);
+    public $lastLoadedMessageId;
+    public $limiteCargaInicial = 8;
+    public $limiteCarga = 1;
     
-        // Verificar si json_decode devolvió un array
-        if (is_array($data)) {
-            try {
-                // Crear una nueva instancia de Message
-                $mensaje = new Message($data);
-    
-                // Asegurarse de que $this->messages es una colección o array
-                if (is_array($this->messages) || $this->messages instanceof \Illuminate\Support\Collection) {
-                    $this->messages[] = $mensaje; // Agregar el mensaje a la colección
-                } else {
-                    throw new \Exception('La propiedad $messages no es una colección o array.');
-                }
-            } catch (\Exception $e) {
-                // Manejar errores si el modelo no puede ser creado o el mensaje es inválido
-                Log::error('Error al procesar el mensaje.', ['exception' => $e->getMessage(), 'data' => $data]);
-            }
-        } else {
-            Log::error('Error al decodificar JSON:', ['json' => $mensaje]);
-        }
-    }
-
-    public function loadChat($contactId)
-    {
+    public function changeContact($contactId){
+        $this->messages = [];
+        $this->lastLoadedMessageId=0;
         $this->selectedContactId = $contactId;
-        $this->user = Auth::user();
-        $this->receptor = User::find($contactId);
-        $emisor = $this->user->id;
-        $this->messages = Message::select('messages.*', 'translations.message_translated') 
-            ->leftJoin('translations', 'messages.translated_message_id', '=', 'translations.id')
-            ->where(function ($query) use ($emisor, $contactId) {
-                $query->where('messages.transmitter_id', $emisor)
-                ->where('messages.receiver_id', $contactId);
-            })
-            ->orWhere(function ($query) use ($emisor, $contactId) {
-                $query->where('messages.transmitter_id', $contactId)
-                ->where('messages.receiver_id', $emisor);
-            })
-            ->orderBy('messages.created_at', 'asc')
-            ->get();
+        $this->loadChat();
+        // dd($this->messages);
+    }
+    
+    public function Refresh(){
+        $this->loadChat();
     }
 
+
+    public function loadChat()
+    {
+        $this->user = Auth::user();
+        $this->receptor = User::find($this->selectedContactId);
+        $emisor = $this->user->id;
+        
+        $this->messages = Message::with('translation')
+        ->where('transmitter_id', $emisor)->where('receiver_id', $this->receptor->id)
+        ->orWhere('transmitter_id', $this->receptor->id)->where('receiver_id', $emisor)
+        ->orderBy('created_at', 'desc')
+        ->limit($this->limiteCargaInicial)
+        ->get()
+        ->reverse();
+        
+        // Actualiza el ID del último mensaje cargado
+        if ($this->messages->isNotEmpty()) {
+            $this->lastLoadedMessageId = $this->messages->first()->id;
+        }
+        //dd($this->lastLoadedMessageId);
+        $this->dispatch("MensajesCargadosInicio");
+    }
+    
+    public function loadMoreMessages()
+    {
+        if (!$this->lastLoadedMessageId) {
+            return; // No hay más mensajes que cargar
+        }
+        
+        $this->user = Auth::user();
+        $this->receptor = User::find($this->selectedContactId);
+        $emisor = $this->user->id;
+        
+        //DB::enableQueryLog();
+        // Obtener mensajes anteriores
+        $moreMessages = Message::with('translation')
+        ->where('id', '<', $this->lastLoadedMessageId)
+        ->where(function($query) use ($emisor) {
+            $query->where(function($subQuery) use ($emisor) {
+                $subQuery->where('transmitter_id', $emisor)
+                         ->where('receiver_id', $this->receptor->id);
+            })
+            ->orWhere(function($subQuery) use ($emisor) {
+                $subQuery->where('transmitter_id', $this->receptor->id)
+                         ->where('receiver_id', $emisor);
+            });
+        })
+        ->limit($this->limiteCarga)
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->reverse();
+    
+        
+        //$queries = DB::getQueryLog();
+        //dd($queries);
+        if ($moreMessages->isEmpty()) {
+            return $this->lastLoadedMessageId = NULL ; // No hay más mensajes que cargar
+        }
+        
+        $this->lastLoadedMessageId = $moreMessages->first()->id;
+        //dd($this->lastLoadedMessageId,$moreMessages);
+        
+        // Concatenar los mensajes nuevos a la colección existente
+        $this->messages = $moreMessages->concat($this->messages);
+
+        // Actualiza el ID del último mensaje cargado
+        $this->dispatch("MensajesCargados");
+    }
     public function render()
     {
         return view('livewire.user-chat');

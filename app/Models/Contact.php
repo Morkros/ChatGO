@@ -8,12 +8,13 @@ class Contact extends Model
 {
     protected $fillable = [
         'user_id',
+        'name',
         'id_contact',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'id_contact');
     }
 }
 
