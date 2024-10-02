@@ -18,6 +18,7 @@ class UserChat extends Component
 
     public function Refresh(){
         $this->loadChat($this->selectedContactId);
+        $this->dispatch('messagesUpdated');
     }
 
     public function onMessageReceived($mensaje)
@@ -52,7 +53,7 @@ class UserChat extends Component
         $this->user = Auth::user();
         $this->receptor = User::find($contactId);
         $emisor = $this->user->id;
-        $this->messages = Message::select('messages.*', 'translations.message_translated') 
+        $this->messages = Message::select('messages.*', 'translations.message_translated')
             ->leftJoin('translations', 'messages.translated_message_id', '=', 'translations.id')
             ->where(function ($query) use ($emisor, $contactId) {
                 $query->where('messages.transmitter_id', $emisor)
@@ -63,6 +64,7 @@ class UserChat extends Component
                 ->where('messages.receiver_id', $emisor);
             })
             ->orderBy('messages.created_at', 'asc')
+            ->take(10)
             ->get();
     }
 

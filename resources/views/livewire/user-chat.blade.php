@@ -25,16 +25,20 @@
     @else
         <p class="text-white">Seleccionar Chat.</p>
     @endif
-</div>
-@push('scripts')
+    @push('scripts')
     <script>
-        const messagesContainer = document.getElementById('messages-container');
+    const messagesContainer = document.getElementById('messages-container');
+
+    function scrollToBottom() {
+        console.log();
         
-        function scrollToBottom() {
+        setTimeout(() => {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-        console.log("asd")
-        Livewire.on('SelectContact', scrollToBottom); // Pass function reference without parentheses
-    </script>
+        }, 100); // Ajusta el tiempo si es necesario
+    }
+
+    Livewire.on('messagesUpdated', scrollToBottom); // Escuchar el evento
+</script>
 @endpush
+</div>
 
