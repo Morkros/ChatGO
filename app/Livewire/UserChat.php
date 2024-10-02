@@ -17,7 +17,7 @@ class UserChat extends Component
     public $user;
     public $receptor;
     public $lastLoadedMessageId;
-    public $limiteCargaInicial = 8;
+    public $limiteCargaInicial = 9;
     public $limiteCarga = 1;
     
     public function changeContact($contactId){
@@ -87,8 +87,10 @@ class UserChat extends Component
         
         //$queries = DB::getQueryLog();
         //dd($queries);
+
         if ($moreMessages->isEmpty()) {
-            return $this->lastLoadedMessageId = NULL ; // No hay más mensajes que cargar
+            $this->dispatch("MensajesTotalCargados");
+            return $this->lastLoadedMessageId = NULL; // No hay más mensajes que cargar
         }
         
         $this->lastLoadedMessageId = $moreMessages->first()->id;

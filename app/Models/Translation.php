@@ -16,7 +16,7 @@ class Translation extends Model
     // Definir la relación con el modelo Message (si es necesario)
     public function messages()
     {
-        return $this->hasMany(Message::class, 'id_translations');
+        return $this->hasMany(Message::class, 'translated_message_id');
     }
 
 }

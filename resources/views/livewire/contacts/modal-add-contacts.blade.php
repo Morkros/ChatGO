@@ -29,6 +29,9 @@
                             <button wire:click="addContact" class="mt-3 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                                 Añadir
                             </button>
+                            @if ($aviso)
+                                <span class="ml-3 text-gray-500">{{ $aviso }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
