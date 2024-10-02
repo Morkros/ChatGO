@@ -10,6 +10,7 @@
                 <li class="flex {{ $isUserMessage ? 'justify-end' : 'justify-start' }}">
                     <div class="{{ $messageClass }} rounded-lg px-4 py-2 max-w-xs">
                         {{-- @dd($message,$receptor)  --}}
+                        {{-- @dd($message) --}}
                         @if ($isUserMessage)
                             {{ $message->body }}
                         @else
