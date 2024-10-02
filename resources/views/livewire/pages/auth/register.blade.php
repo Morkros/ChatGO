@@ -93,7 +93,6 @@ new #[Layout('layouts.guest')] class extends Component
                 <option value="UK">{{ __('українська (UK)') }}</option>
                 <option value="ZH-HANS">{{ __('中文 - 简体 (ZH-HANS)') }}</option>
                 <option value="ZH-HANT">{{ __('中文 - 繁体 (ZH-HANT)') }}</option>
-                <!-- Añade más opciones según lo que necesites -->
             </select>
             <x-input-error :messages="$errors->get('language')" class="mt-2" />
         </div>
