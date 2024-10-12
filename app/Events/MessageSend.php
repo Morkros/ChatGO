@@ -26,7 +26,7 @@ class MessageSend implements ShouldBroadcast
   
     public function broadcastAs()
     {
-        return 'Refresh';
+        return 'MessageSend';
     }
 }
 

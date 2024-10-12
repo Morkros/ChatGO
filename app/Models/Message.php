@@ -24,6 +24,11 @@ class Message extends Model
 
     public function translation()
     {
-        return $this->belongsTo(Translation::class, 'id');
+        return $this->belongsTo(Translation::class, 'translated_message_id');
+    }
+
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
     }
 }

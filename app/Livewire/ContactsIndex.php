@@ -14,7 +14,7 @@ class ContactsIndex extends Component
     public $name;
     public $email;
     public $contacts;
-
+    
     //ModalUpdate
     public $contactUpdate;
     public $aviso;

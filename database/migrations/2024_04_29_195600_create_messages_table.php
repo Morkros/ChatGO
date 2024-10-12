@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('transmitter_id');
             $table->string('receiver_id');
             $table->string('body');
+            $table->timestamp('is_read')->nullable();
             $table->foreignId('translated_message_id')->nullable()->constrained('translations');
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ use Livewire\Volt\Component;
 
 new class extends Component
 {
-    public string $name = '';
+    public string $username = '';
     public string $email = '';
     public string $language = '';
 
@@ -20,7 +20,7 @@ new class extends Component
     public function mount(): void
     {
         // dd(Auth::user());
-        $this->name = Auth::user()->username;
+        $this->username = Auth::user()->username;
         $this->email = Auth::user()->email;
         $this->language = Auth::user()->language;
     }
@@ -33,7 +33,7 @@ new class extends Component
         $user = Auth::user();
 
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
             'language' => ['required' , 'string'],
         ]);
@@ -43,10 +43,10 @@ new class extends Component
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
-
+        //dd($user,$this->username);
         $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        $this->dispatch('profile-updated', username: $user->username);
     }
 
     /**
@@ -81,9 +81,9 @@ new class extends Component
 
     <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="username" :value="__('Name')" />
+            <x-text-input wire:model="username" id="username" name="username" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 
         <div>

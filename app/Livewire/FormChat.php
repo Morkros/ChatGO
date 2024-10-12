@@ -45,10 +45,11 @@ class FormChat extends Component
                 'transmitter_id' => $emisor->id,
                 'receiver_id' => $receptor->id,
                 'body' => $this->mensaje,
+                'read' => false,
                 'translated_message_id' => $translationSave->id ?? null,
             ]);
     
-            event(new MessageSend($message));
+            event(new MessageSend($message)); // Enviar mensaje por Pusher
     
             $this->dispatch('Refresh', $this->SelectedContactId);
             $this->mensaje = "";

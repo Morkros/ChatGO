@@ -16,5 +16,10 @@ class Contact extends Model
     {
         return $this->belongsTo(User::class, 'id_contact');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class,'transmitter_id');
+    }
 }
 
