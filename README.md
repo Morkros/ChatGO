@@ -37,12 +37,12 @@ Para esta guía se utiliza Laragon
   - Al clickear en el botón **"CONTACTS LIST"** en la barra de navegación, se ira a dicha ventana.
   - del lado superior derecho se encuentra el nombre del usuario, al hacer click en el mismo desplegará un menú donde se podrá editar el perfil del usuario y desconectarse.
 
-  **CONTACTS LIST**:
+- **CONTACTS LIST**:
   -Al hacer click en en el botón "agregar" se mostrará un panel que requerirá un nombre y un correo electrónico (perteneciente a otro usuario), si los datos ingresados son correctos, se añadirá un nuevo contacto a su listado.
   - Junto a cada contacto, sobre el lado derecho, se encuentran los botones de "editar contacto" y "eliminar contacto".
 
-**PROFILE**:
-- Permite cambiar el nombre de usuario, correo electronico asociado a la cuenta, contraseña, lenguaje de los mensajes enviados y recibidos.
-- Al final de la vista se encuentra el botón para eliminar la cuenta de forma PERMANENTE.
+- **PROFILE**:
+  - Permite cambiar el nombre de usuario, correo electronico asociado a la cuenta, contraseña, lenguaje de los mensajes enviados y recibidos.
+  - Al final de la vista se encuentra el botón para eliminar la cuenta de forma PERMANENTE.
 
 
