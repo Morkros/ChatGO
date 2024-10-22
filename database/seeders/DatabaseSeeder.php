@@ -16,23 +16,24 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         //crea usuarios
-        $users = User::factory()->count(10)->create();
+        //$users = User::factory()->count(10)->create();
 
-        foreach ($users as $user) {
-            // Crea contactos para cada usuario
-            $contactUsers = $users->filter(fn($u) => $u->id !== $user->id)->random(3);
+        // foreach ($users as $user) {
+        //     // Crea contactos para cada usuario
+        //     $contactUsers = $users->filter(fn($u) => $u->id !== $user->id)->random(3);
 
-            foreach ($contactUsers as $contactUser) {
-                Contact::create([
-                    'user_id' => $user->id,
-                    'id_contact' => $contactUser->id,
-                ]);
-            }
-        }        
+        //     foreach ($contactUsers as $contactUser) {
+        //         Contact::create([
+        //             'user_id' => $user->id,
+        //             'id_contact' => $contactUser->id,
+        //         ]);
+        //     }
+        // }        
 
          \App\Models\User::factory()->create([
              'username' => 'UserEN',
              'email' => 'user@english.com',
+             'email_verified_at' => now(),
              'password' => Hash::make('english1'),
              'language' => fake()->randomElement(['EN_US']),
          ]);
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
          \App\Models\User::factory()->create([
             'username' => 'UsuarioES',
             'email' => 'user@español.com',
+            'email_verified_at' => now(),
             'password' => Hash::make('español1'),
             'language' => fake()->randomElement(['ES']),
         ]);

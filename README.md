@@ -1,10 +1,8 @@
-# VERSIONES
-PHP 8.1.10
-Laravel 10.0.0
-Breeze 1.29.1
-Livewire 3.5.4
-Spatie 6.9.0
-DeepL Api 
+# SOFTWARE NECESARIO Y VERSIONES
+Este listado contiene el software necesario para el funcionamiento de la aplicación
+- PHP 8.1.10 o mayor
+- Laragon o XAMPP
+- Composer
 
 # INSTALACION E INICIALIZACIÓN
 Para esta guía se utiliza Laragon 
@@ -16,6 +14,7 @@ Para esta guía se utiliza Laragon
 6. Ingresar la linea "composer install" seguido de "npm install" (ambas lineas sin comillas) para descargar las dependencias necesarias para el funcionamiento de la aplicación.
 7. Utilizar la linea "php artisan migrate" (sin comillas) para generar la base de datos.
 8. Abrir otra terminal, e ingresar "php artisan serve" en un terminal y "npm run dev" en la otra, esto permitirá ingresar a la aplicación.
+ - En caso de querer hostear la aplicación en la red LAN, utilizar "php artisan serve --host=0.0.0.0" y "npm run build" para abrir la web en la red LAN.
 9. Utilizando un navegador (Edge, Chrome, Firefox) ingresar a 127.0.0.1:8000.
 
 # VISTAS Y FUNCIONES PRINCIPALES
