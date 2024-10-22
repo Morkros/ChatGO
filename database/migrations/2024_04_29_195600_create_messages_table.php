@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('body');
             $table->timestamp('is_read')->nullable();
             $table->foreignId('translated_message_id')->nullable()->constrained('translations');
+            $table->boolean('is_read');
             $table->timestamps();
         });
     }

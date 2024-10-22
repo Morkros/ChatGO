@@ -6,8 +6,11 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
+<<<<<<< Updated upstream
 use App\Models\User;
 use App\Models\Message;
+=======
+>>>>>>> Stashed changes
 
 
 class ListContact extends Component
@@ -16,9 +19,14 @@ class ListContact extends Component
     public $contacts;
     public $selectedContactId;
     protected $listeners = ['Notification'];
+<<<<<<< Updated upstream
     
     public function Evento($contact_id)
     {
+=======
+
+    public function Evento($contact_id) {
+>>>>>>> Stashed changes
         $this->selectedContactId = $contact_id;
         $this->dispatch('SelectContact',$contact_id);
         $this->loadContacts();

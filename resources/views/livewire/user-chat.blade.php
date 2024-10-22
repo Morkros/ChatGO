@@ -48,6 +48,17 @@
     messagesContainer = document.getElementById('messages-container');
     
     // Mantener el scroll en la parte inferior al cargar la página
+<<<<<<< Updated upstream
+=======
+    document.addEventListener('MensajesCargados', function() {
+        setTimeout(() => {
+            // console.log("Baja:", messagesContainer.scrollHeight - scrollHeightOld)
+            messagesContainer.scrollTop = messagesContainer.scrollHeight -
+                scrollHeightOld; // Ajusta scrollTop
+            scrollHeightOld = messagesContainer.scrollHeight;
+        }, 1);
+    });
+>>>>>>> Stashed changes
     document.addEventListener('MensajesCargadosInicio', function() {
         window.dispatchEvent(new Event('MensajeCargadosInicio'));
         scrollToBottom();
@@ -64,6 +75,10 @@
     // Función para hacer scroll al final
     function scrollToBottom() {
         setTimeout(() => {
+<<<<<<< Updated upstream
+=======
+            // console.log("ScrollHeight:", messagesContainer.scrollHeight)
+>>>>>>> Stashed changes
             messagesContainer.scrollTop = messagesContainer.scrollHeight; // Ajusta scrollTop
             scrollHeightOld = messagesContainer.scrollHeight;
         }, 1);
@@ -75,6 +90,10 @@
 
     // Detectar si el usuario ha llegado al inicio del contenedor y llamar al método Livewire para cargar más mensajes
     messagesContainer.addEventListener('scroll', function() {
+<<<<<<< Updated upstream
+=======
+        // console.log(this.scrollTop);
+>>>>>>> Stashed changes
         if ((cargar) && (this.scrollTop === 0) && (messagesContainer.scrollHeight > messagesContainer
                 .clientHeight)) {
             Livewire.dispatch('loadMoreMessages');

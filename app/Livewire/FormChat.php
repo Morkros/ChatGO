@@ -30,7 +30,7 @@ class FormChat extends Component
     public function store()
     {
         if (!Empty($this->mensaje)) {
-            $emisor = User::find(Auth::id());
+            $emisor = Auth::user();
             $receptor = User::find($this->SelectedContactId);
             if ($emisor->language != $receptor->language) {
                 $resultTranslate = TranslationController::translate($this->mensaje, $emisor->language, $receptor->language);
@@ -51,7 +51,6 @@ class FormChat extends Component
     
             event(new MessageSend($message)); // Enviar mensaje por Pusher
     
-            $this->dispatch('Refresh', $this->SelectedContactId);
             $this->mensaje = "";
         }
     }

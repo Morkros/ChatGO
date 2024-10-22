@@ -11,8 +11,12 @@ class TranslationController extends Controller
 
     public static function init()
     {
-        if (self::$translator === null) {
-            self::$translator = new Translator(self::$authKey);
+        try {
+            if (self::$translator === null) {
+                self::$translator = new Translator(self::$authKey);
+            }
+        } catch (\Throwable $e) {
+            return 'Translation failed: ' . $e->getMessage();
         }
     }
 
