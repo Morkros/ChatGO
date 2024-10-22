@@ -31,10 +31,17 @@ class DatabaseSeeder extends Seeder
         }        
 
          \App\Models\User::factory()->create([
-             'username' => 'Administrador',
-             'email' => 'admin@admin.com',
-             'password' => Hash::make('admin'),
-             'language' => fake()->randomElement(['ES', 'EN_US', 'DE']),
+             'username' => 'UserEN',
+             'email' => 'user@english.com',
+             'password' => Hash::make('english1'),
+             'language' => fake()->randomElement(['EN_US']),
          ]);
+
+         \App\Models\User::factory()->create([
+            'username' => 'UsuarioES',
+            'email' => 'user@español.com',
+            'password' => Hash::make('español1'),
+            'language' => fake()->randomElement(['ES']),
+        ]);
     }
 }
