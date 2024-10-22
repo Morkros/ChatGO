@@ -13,14 +13,18 @@ class UserChat extends Component
 {
     public $messages;
     protected $listeners = ['SelectContact' => 'changeContact', 'Refresh', 'MessageSend' => 'onMessageReceived','loadMoreMessages'];
+    public $mostrarMensajeOriginal;
     public $user;
     public $receptor;
     public $lastLoadedMessageId;
-    public $limiteCargaInicial = 10;
+    public $limiteCargaInicial = 20;
     public $limiteCarga = 10;
     
     public function mount(){
         $this->user = Auth::user();
+    }
+    public function mostrarOriginal(){
+        $this->mostrarMensajeOriginal = !$this->mostrarMensajeOriginal;
     }
 
     public function changeContact($contactId){
@@ -39,9 +43,10 @@ class UserChat extends Component
 
     public function loadChat()
     {
+        $this->mostrarMensajeOriginal = true;
         $emisor = $this->user->id;
-        Message::where('receiver_id', $emisor )
-        ->update(['is_read' => now()]);
+        //Actuliza los mensajes no leidos a leidos una vez que abre el chat
+        Message::where('receiver_id', $emisor )->update(['is_read' => now()]);
         // $this->receptor = User::find($this->selectedContactId);
         
         $this->messages = Message::with('translation')
@@ -58,10 +63,12 @@ class UserChat extends Component
         }
         //dd($this->lastLoadedMessageId);
         $this->dispatch("MensajesCargadosInicio");
+        $this->dispatch('showTranslated', true);
     }
     
     public function loadMoreMessages()
     {
+        
         if (!$this->lastLoadedMessageId) {
             return; // No hay más mensajes que cargar
         }
