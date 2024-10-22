@@ -27,6 +27,7 @@ Pusher.logToConsole = true;
 //         alert(JSON.stringify(data));
 //     });
 window.Echo.channel('chatgo')
+<<<<<<< Updated upstream
     .listen('.MessageSend', (event) => {
         if (event.message.receiver_id == window.userId) {
             console.log("Receptor: ", event.message.receiver_id, " Login: ", window.userId);
@@ -42,6 +43,25 @@ window.Echo.channel('chatgo')
         }
     })
     .listen('.Refresh', () => {
+=======
+   .listen('.MessageSend', (event) => {
+    console.log('Message received:', event.message);
+    if (window.Livewire) {
+        const messageJson = JSON.stringify(event.message);
+        alert(JSON.stringify(messageJson));
+        window.Livewire.dispatch('MessageSend', { mensaje: messageJson });
+    } else {
+        console.error('Livewire is not available');
+    }})
+
+    .listen('.Refresh', (event) => {
+        // Notificacion
+        console.log("Notificacion", event.message.transmitter_id != window.userId)
+        if (event.message.transmitter_id != window.userId){
+            window.Livewire.dispatch('Notification');
+        }
+        // Refrescar mensajes al enviar un mensaje
+>>>>>>> Stashed changes
         if (window.Livewire) {
         console.log('Refresh');
             window.Livewire.dispatch('Refresh');
