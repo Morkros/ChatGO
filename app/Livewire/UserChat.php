@@ -6,8 +6,6 @@ use Livewire\Component;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 
 class UserChat extends Component
 {
@@ -63,7 +61,7 @@ class UserChat extends Component
         }
         //dd($this->lastLoadedMessageId);
         $this->dispatch("MensajesCargadosInicio");
-        $this->dispatch('showTranslated', true);
+        // $this->dispatch('showTranslated', true);
     }
     
     public function loadMoreMessages()
@@ -103,10 +101,10 @@ class UserChat extends Component
         
         $this->lastLoadedMessageId = $moreMessages->first()->id;
         
-        // Concatenar los mensajes nuevos a la colección existente
+        // Concatenar los mensajes nuevos
         $this->messages = $moreMessages->concat($this->messages);
 
-        // Actualiza el ID del último mensaje cargado
+        // Evento para scroll
         $this->dispatch("MensajesCargados");
     }
 

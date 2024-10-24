@@ -24,13 +24,20 @@
             @if (Route::has('login'))
                 <livewire:welcome.navigation />
             @endif
-            
+
             <div class="text-center text-sm text-gray-500 text-gray-400">
                 Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
             </div>
         </div>
     </div>
     </div>
+    <script>
+        // Listar voces disponibles
+        window.speechSynthesis.onvoiceschanged = function() {
+            const voices = window.speechSynthesis.getVoices();
+            console.log(voices);
+        };
+    </script>
 </body>
 
 </html>

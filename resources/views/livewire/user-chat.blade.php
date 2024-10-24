@@ -30,8 +30,11 @@
                             <span x-show="!showTranslated">
                                 {{ $message->body }}
                             </span>
-                        @endif
-                        <div class="text-xs text-right text-white-500 mt-1">{{ $message->created_at->format('H:i') }}</div>
+                            @endif
+                            <div class="flex justify-between items-center">
+                                <button class="text-left text-white-500 mt-1" onclick="leerMensaje('{{$message->translation->message_translated ?? $message->body}}','{{$user->language}}')">Leer</button>
+                                <div class="text-xs text-right text-white-500 mt-1">{{ $message->created_at->format('H:i') }}</div>
+                            </div>                            
                     </div>
                 </li>
                            
@@ -42,23 +45,12 @@
         <p class="text-white">Seleccionar Chat.</p>
     @endif
 </div>
-
 <script>
+
     // Emitir el evento
     messagesContainer = document.getElementById('messages-container');
     
     // Mantener el scroll en la parte inferior al cargar la página
-<<<<<<< Updated upstream
-=======
-    document.addEventListener('MensajesCargados', function() {
-        setTimeout(() => {
-            // console.log("Baja:", messagesContainer.scrollHeight - scrollHeightOld)
-            messagesContainer.scrollTop = messagesContainer.scrollHeight -
-                scrollHeightOld; // Ajusta scrollTop
-            scrollHeightOld = messagesContainer.scrollHeight;
-        }, 1);
-    });
->>>>>>> Stashed changes
     document.addEventListener('MensajesCargadosInicio', function() {
         window.dispatchEvent(new Event('MensajeCargadosInicio'));
         scrollToBottom();
@@ -75,10 +67,6 @@
     // Función para hacer scroll al final
     function scrollToBottom() {
         setTimeout(() => {
-<<<<<<< Updated upstream
-=======
-            // console.log("ScrollHeight:", messagesContainer.scrollHeight)
->>>>>>> Stashed changes
             messagesContainer.scrollTop = messagesContainer.scrollHeight; // Ajusta scrollTop
             scrollHeightOld = messagesContainer.scrollHeight;
         }, 1);
@@ -90,10 +78,6 @@
 
     // Detectar si el usuario ha llegado al inicio del contenedor y llamar al método Livewire para cargar más mensajes
     messagesContainer.addEventListener('scroll', function() {
-<<<<<<< Updated upstream
-=======
-        // console.log(this.scrollTop);
->>>>>>> Stashed changes
         if ((cargar) && (this.scrollTop === 0) && (messagesContainer.scrollHeight > messagesContainer
                 .clientHeight)) {
             Livewire.dispatch('loadMoreMessages');

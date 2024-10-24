@@ -25,15 +25,9 @@
         </div>
     </div>
     <script>
-<<<<<<< Updated upstream
         if (!window.userId || (window.userId !== {{ auth()->user()->id }}) ) {
             window.userId = {{ auth()->user()->id ?? 'null' }};
             console.log(window.userId);
-=======
-        if ((!window.userId) || (window.userId !== {{ auth()->user()->id }})){
-            window.userId = {{ auth()->user()->id ?? 'null'}}
-            console.log(window.userId)
->>>>>>> Stashed changes
         }
     </script>
 </x-app-layout>
